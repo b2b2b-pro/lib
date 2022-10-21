@@ -1,4 +1,4 @@
-package torepo_client
+package repo_client
 
 import (
 	"context"

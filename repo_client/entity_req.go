@@ -1,4 +1,4 @@
-package torepo_client
+package repo_client
 
 import (
 	"context"
@@ -36,12 +36,15 @@ func (gc *RepoGRPC) ListEntity() ([]object.Entity, error) {
 
 	for {
 		x, err := stream.Recv()
+
 		if err == io.EOF {
 			break
 		}
+
 		if err != nil {
 			zap.S().Fatalf("Loop ListEntity error: %v\n", err)
 		}
+
 		r = append(r, *object.MEntity(x))
 		zap.S().Debugf("Loop stream recv: %v\n", x.Id)
 	}

@@ -1,7 +1,7 @@
 /*
-torepo_client - gRPC-клиент к репозиторию
+repo_client - gRPC-клиент к репозиторию
 */
-package torepo_client
+package repo_client
 
 import (
 	"fmt"
