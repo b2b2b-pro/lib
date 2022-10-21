@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"io"
 
-	"github.com/b2b2b-pro/model/rpc4repo"
+	"github.com/b2b2b-pro/lib/torepo"
 )
 
 // Entity - организация, участвующая в системе долговых обязательств
@@ -30,8 +30,8 @@ func ParseEntity(data io.Reader) (*Entity, error) {
 GEntity конвертирует объект организация (Entity) В формат для передачи по gRPC
 From Model to gRPC
 */
-func GEntity(x *Entity) *rpc4repo.Entity {
-	return &rpc4repo.Entity{
+func GEntity(x *Entity) *torepo.Entity {
+	return &torepo.Entity{
 		Id:        int32(x.ID),
 		Inn:       x.INN,
 		Kpp:       x.KPP,
@@ -44,7 +44,7 @@ func GEntity(x *Entity) *rpc4repo.Entity {
 MEntity конвертирует объект организация (Entity) ИЗ формата для передачи по gRPC
 From gRPC to Model
 */
-func MEntity(x *rpc4repo.Entity) *Entity {
+func MEntity(x *torepo.Entity) *Entity {
 	return &Entity{
 		ID:        int(x.Id),
 		INN:       x.Inn,

@@ -4,8 +4,7 @@ import (
 	"encoding/json"
 	"io"
 
-	"github.com/b2b2b-pro/model/rpc4repo"
-
+	"github.com/b2b2b-pro/lib/torepo"
 	"go.uber.org/zap"
 )
 
@@ -30,8 +29,8 @@ func ParseOrigin(data io.Reader) (*Origin, error) {
 GOrigin конвертирует объект организация (Origin) В формат для передачи по gRPC
 From Model to gRPC
 */
-func GOrigin(x *Origin) *rpc4repo.Origin {
-	return &rpc4repo.Origin{
+func GOrigin(x *Origin) *torepo.Origin {
+	return &torepo.Origin{
 		Id:          int32(x.ID),
 		Description: x.Description,
 	}
@@ -41,7 +40,7 @@ func GOrigin(x *Origin) *rpc4repo.Origin {
 MOrigin конвертирует объект организация (Origin) ИЗ формата для передачи по gRPC
 From gRPC to Model
 */
-func MOrigin(x *rpc4repo.Origin) *Origin {
+func MOrigin(x *torepo.Origin) *Origin {
 	return &Origin{
 		ID:          int(x.Id),
 		Description: x.Description,

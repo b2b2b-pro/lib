@@ -2,7 +2,7 @@ syntax = "proto3";
 
 import "google/protobuf/timestamp.proto";
 
-option go_package = "github.com/maris-cyber/b2b2b/lib/torepo";
+option go_package = "github.com/b2b2b-pro/lib/torepo";
 
 package torepo;
 

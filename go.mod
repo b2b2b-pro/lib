@@ -3,7 +3,6 @@ module github.com/b2b2b-pro/lib
 go 1.18
 
 require (
-	github.com/b2b2b-pro/model v0.0.6
 	github.com/golang/protobuf v1.5.2
 	go.uber.org/zap v1.23.0
 	google.golang.org/grpc v1.50.1
