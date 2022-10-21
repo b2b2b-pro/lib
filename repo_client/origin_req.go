@@ -14,8 +14,12 @@ func (gc *RepoGRPC) CreateOrigin(om object.Origin) (int, error) {
 
 	r, err := gc.client.NewOrigin(ctx, object.GOrigin(&om))
 	if err != nil {
-		zap.S().Fatalf("GRPC Client NewOrigin error: %v", err)
+		zap.S().Debugf("GRPC Client NewOrigin error: %v", err)
+
+		return 0, err
 	}
+
 	zap.S().Debugf("GRPC New Origin Reply: %v", r.GetId())
+
 	return int(r.GetId()), err
 }

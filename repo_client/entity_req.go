@@ -16,7 +16,8 @@ func (gc *RepoGRPC) CreateEntity(frm object.Entity) (int, error) {
 
 	r, err := gc.client.NewEntity(ctx, object.GEntity(&frm))
 	if err != nil {
-		zap.S().Fatalf("GRPC Client NewEntity error: %v", err)
+		zap.S().Debugf("GRPC Client NewEntity error: %v", err)
+		return 0, err
 	}
 
 	zap.S().Debugf("GRPC New Entity Reply: %v", r.GetId())
@@ -31,7 +32,8 @@ func (gc *RepoGRPC) ListEntity() ([]object.Entity, error) {
 
 	stream, err := gc.client.ListEntity(ctx, &torepo.Zero{})
 	if err != nil {
-		zap.S().Fatalf("ListEntity error: %v\n", err)
+		zap.S().Debugf("ListEntity error: %v\n", err)
+		return nil, err
 	}
 
 	for {
@@ -42,7 +44,7 @@ func (gc *RepoGRPC) ListEntity() ([]object.Entity, error) {
 		}
 
 		if err != nil {
-			zap.S().Fatalf("Loop ListEntity error: %v\n", err)
+			zap.S().Debugf("Loop ListEntity error: %v\n", err)
 		}
 
 		r = append(r, *object.MEntity(x))

@@ -50,10 +50,12 @@ func New(cfg ConfigRPC, rp ObligationRepo) (*Controller, error) {
 
 func (gs *Controller) Start() {
 	url := fmt.Sprintf("%s:%s", gs.cfg.HostRPC, gs.cfg.PortRPC)
+
 	lis, err := net.Listen("tcp", url)
 	if err != nil {
 		zap.S().Fatalf("failed to listen: %v", err)
 	}
+
 	gs.s = grpc.NewServer()
 	torepo.RegisterB2B2BServiceServer(gs.s, gs)
 
