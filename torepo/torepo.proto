@@ -1,0 +1,54 @@
+syntax = "proto3";
+
+import "google/protobuf/timestamp.proto";
+
+option go_package = "github.com/maris-cyber/b2b2b/lib/torepo";
+
+package torepo;
+
+service B2b2bService {
+  rpc NewEntity (Entity) returns (NewEntityReply) {}
+  rpc ListEntity (Zero) returns (stream Entity) {}
+  rpc NewOrigin (Origin) returns (NewOriginReply) {}
+  rpc NewObligation (Obligation) returns (NewObligationReply) {}
+  rpc ListObligation (Zero) returns (stream Obligation) {}
+}
+
+message Entity {
+  int32 id = 1;
+  string inn = 2;
+  string kpp = 3;
+  string short_name = 4;
+  string full_name = 5;
+}
+
+message NewEntityReply {
+  int32 id = 1;
+  string err = 2;
+}
+
+message Origin {
+  int32 id =1;
+  string description = 2;
+}
+
+message NewOriginReply {
+  int32 id = 1;
+  string err = 2;
+}
+
+message Obligation {
+  int32 id = 1;
+  int32 dbtorid = 2;
+  int32 creditorid = 3;
+  float cost = 4;
+  int32 originid = 5;
+  google.protobuf.Timestamp date = 6;
+}
+
+message NewObligationReply {
+  int32 id = 1;
+  string err = 2;
+}
+
+message Zero {}
