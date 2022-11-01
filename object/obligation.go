@@ -38,8 +38,9 @@ func ParseObligation(data io.Reader) (*Obligation, error) {
 GObligation конвертирует объект обязательство (Obligation) В формат для передачи по gRPC
 From Model to gRPC
 */
-func GObligation(x *Obligation) *torepo.Obligation {
+func GObligation(tkn string, x *Obligation) *torepo.Obligation {
 	return &torepo.Obligation{
+		Tkn:        tkn,
 		Id:         int32(x.ID),
 		Dbtorid:    int32(x.DebtorID),
 		Creditorid: int32(x.CreditorID),

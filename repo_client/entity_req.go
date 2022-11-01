@@ -10,27 +10,27 @@ import (
 	"go.uber.org/zap"
 )
 
-func (gc *RepoGRPC) CreateEntity(frm object.Entity) (int, error) {
+func (gc *RepoGRPC) CreateEntity(tkn string, frm object.Entity) (int, error) {
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancel()
 
-	r, err := gc.client.NewEntity(ctx, object.GEntity(&frm))
+	r, err := gc.client.NewEntity(ctx, object.GEntity(tkn, &frm))
 	if err != nil {
 		zap.S().Debugf("GRPC Client NewEntity error: %v", err)
 		return 0, err
 	}
 
-	zap.S().Debugf("GRPC New Entity Reply: %v", r.GetId())
+	zap.S().Debugf("GRPC New Entity Reply Id: %v\n", r.GetId())
 
 	return int(r.GetId()), err
 }
 
-func (gc *RepoGRPC) ListEntity() ([]object.Entity, error) {
+func (gc *RepoGRPC) ListEntity(tkn string) ([]object.Entity, error) {
 	r := []object.Entity{}
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancel()
 
-	stream, err := gc.client.ListEntity(ctx, &torepo.Zero{})
+	stream, err := gc.client.ListEntity(ctx, &torepo.Tkn{Tkn: tkn})
 	if err != nil {
 		zap.S().Debugf("ListEntity error: %v\n", err)
 		return nil, err

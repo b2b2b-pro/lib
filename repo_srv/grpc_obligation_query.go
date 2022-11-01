@@ -8,14 +8,14 @@ import (
 	"go.uber.org/zap"
 )
 
-func (gs *Controller) NewObligation(ctx context.Context, frm *torepo.Obligation) (*torepo.NewObligationReply, error) {
-	zap.S().Debugf("(s *GRPCServer)NewObligation. frm: %v\n", frm)
+func (gs *Controller) NewObligation(ctx context.Context, obl *torepo.Obligation) (*torepo.NewObligationReply, error) {
+	zap.S().Debugf("(s *GRPCServer)NewObligation. frm: %v\n", obl)
 
 	var reply *torepo.NewObligationReply
 
-	ent := object.MObligation(frm)
+	ent := object.MObligation(obl)
 
-	r, err := gs.db.CreateObligation(*ent)
+	r, err := gs.db.CreateObligation(obl.Tkn, *ent)
 	if err != nil {
 		reply = &torepo.NewObligationReply{Id: int32(r), Err: err.Error()}
 	} else {
@@ -27,18 +27,18 @@ func (gs *Controller) NewObligation(ctx context.Context, frm *torepo.Obligation)
 	return reply, nil
 }
 
-func (gs *Controller) ListObligation(z *torepo.Zero, stream torepo.B2B2BService_ListObligationServer) error {
+func (gs *Controller) ListObligation(tkn *torepo.Tkn, stream torepo.B2B2BService_ListObligationServer) error {
 	zap.S().Debugf("(s *GRPCServer)ListObligation\n")
 
 	var err error
 
-	le, err := gs.db.ListObligation()
+	le, err := gs.db.ListObligation(tkn.Tkn)
 	if err != nil {
 		zap.S().Errorf("gs.db.ListObligation() error: %v\n", err)
 	}
 
 	for _, x := range le {
-		if err = stream.Send(object.GObligation(&x)); err != nil {
+		if err = stream.Send(object.GObligation(tkn.Tkn, &x)); err != nil {
 			return err
 		}
 	}

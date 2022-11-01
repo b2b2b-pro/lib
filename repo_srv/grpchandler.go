@@ -19,26 +19,26 @@ type ConfigRPC struct {
 	PortRPC string
 }
 
-type ObligationRepo interface {
-	CreateOrigin(object.Origin) (int, error)
-	CreateEntity(object.Entity) (int, error)
-	ListEntity() ([]object.Entity, error)
-	CreateObligation(object.Obligation) (int, error)
-	ListObligation() ([]object.Obligation, error)
+type Repo interface {
+	CreateOrigin(string, object.Origin) (int, error)
+	CreateEntity(string, object.Entity) (int, error)
+	ListEntity(string) ([]object.Entity, error)
+	CreateObligation(string, object.Obligation) (int, error)
+	ListObligation(string) ([]object.Obligation, error)
 	Stop()
 }
 
 type Controller struct {
 	torepo.UnimplementedB2B2BServiceServer
 	s      *grpc.Server
-	db     ObligationRepo
+	db     Repo
 	cfg    ConfigRPC
 	notify chan error
 	// serverCtx     context.Context
 	// serverStopCtx context.CancelFunc
 }
 
-func New(cfg ConfigRPC, rp ObligationRepo) (*Controller, error) {
+func New(cfg ConfigRPC, rp Repo) (*Controller, error) {
 	zap.S().Debugf("GRPCServer New config: %v\n", cfg)
 	gs := &Controller{
 		db:     rp,

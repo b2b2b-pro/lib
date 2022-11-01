@@ -23,10 +23,10 @@ const _ = grpc.SupportPackageIsVersion7
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type B2B2BServiceClient interface {
 	NewEntity(ctx context.Context, in *Entity, opts ...grpc.CallOption) (*NewEntityReply, error)
-	ListEntity(ctx context.Context, in *Zero, opts ...grpc.CallOption) (B2B2BService_ListEntityClient, error)
+	ListEntity(ctx context.Context, in *Tkn, opts ...grpc.CallOption) (B2B2BService_ListEntityClient, error)
 	NewOrigin(ctx context.Context, in *Origin, opts ...grpc.CallOption) (*NewOriginReply, error)
 	NewObligation(ctx context.Context, in *Obligation, opts ...grpc.CallOption) (*NewObligationReply, error)
-	ListObligation(ctx context.Context, in *Zero, opts ...grpc.CallOption) (B2B2BService_ListObligationClient, error)
+	ListObligation(ctx context.Context, in *Tkn, opts ...grpc.CallOption) (B2B2BService_ListObligationClient, error)
 }
 
 type b2B2BServiceClient struct {
@@ -46,7 +46,7 @@ func (c *b2B2BServiceClient) NewEntity(ctx context.Context, in *Entity, opts ...
 	return out, nil
 }
 
-func (c *b2B2BServiceClient) ListEntity(ctx context.Context, in *Zero, opts ...grpc.CallOption) (B2B2BService_ListEntityClient, error) {
+func (c *b2B2BServiceClient) ListEntity(ctx context.Context, in *Tkn, opts ...grpc.CallOption) (B2B2BService_ListEntityClient, error) {
 	stream, err := c.cc.NewStream(ctx, &B2B2BService_ServiceDesc.Streams[0], "/torepo.B2b2bService/ListEntity", opts...)
 	if err != nil {
 		return nil, err
@@ -96,7 +96,7 @@ func (c *b2B2BServiceClient) NewObligation(ctx context.Context, in *Obligation, 
 	return out, nil
 }
 
-func (c *b2B2BServiceClient) ListObligation(ctx context.Context, in *Zero, opts ...grpc.CallOption) (B2B2BService_ListObligationClient, error) {
+func (c *b2B2BServiceClient) ListObligation(ctx context.Context, in *Tkn, opts ...grpc.CallOption) (B2B2BService_ListObligationClient, error) {
 	stream, err := c.cc.NewStream(ctx, &B2B2BService_ServiceDesc.Streams[1], "/torepo.B2b2bService/ListObligation", opts...)
 	if err != nil {
 		return nil, err
@@ -133,10 +133,10 @@ func (x *b2B2BServiceListObligationClient) Recv() (*Obligation, error) {
 // for forward compatibility
 type B2B2BServiceServer interface {
 	NewEntity(context.Context, *Entity) (*NewEntityReply, error)
-	ListEntity(*Zero, B2B2BService_ListEntityServer) error
+	ListEntity(*Tkn, B2B2BService_ListEntityServer) error
 	NewOrigin(context.Context, *Origin) (*NewOriginReply, error)
 	NewObligation(context.Context, *Obligation) (*NewObligationReply, error)
-	ListObligation(*Zero, B2B2BService_ListObligationServer) error
+	ListObligation(*Tkn, B2B2BService_ListObligationServer) error
 	mustEmbedUnimplementedB2B2BServiceServer()
 }
 
@@ -147,7 +147,7 @@ type UnimplementedB2B2BServiceServer struct {
 func (UnimplementedB2B2BServiceServer) NewEntity(context.Context, *Entity) (*NewEntityReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method NewEntity not implemented")
 }
-func (UnimplementedB2B2BServiceServer) ListEntity(*Zero, B2B2BService_ListEntityServer) error {
+func (UnimplementedB2B2BServiceServer) ListEntity(*Tkn, B2B2BService_ListEntityServer) error {
 	return status.Errorf(codes.Unimplemented, "method ListEntity not implemented")
 }
 func (UnimplementedB2B2BServiceServer) NewOrigin(context.Context, *Origin) (*NewOriginReply, error) {
@@ -156,7 +156,7 @@ func (UnimplementedB2B2BServiceServer) NewOrigin(context.Context, *Origin) (*New
 func (UnimplementedB2B2BServiceServer) NewObligation(context.Context, *Obligation) (*NewObligationReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method NewObligation not implemented")
 }
-func (UnimplementedB2B2BServiceServer) ListObligation(*Zero, B2B2BService_ListObligationServer) error {
+func (UnimplementedB2B2BServiceServer) ListObligation(*Tkn, B2B2BService_ListObligationServer) error {
 	return status.Errorf(codes.Unimplemented, "method ListObligation not implemented")
 }
 func (UnimplementedB2B2BServiceServer) mustEmbedUnimplementedB2B2BServiceServer() {}
@@ -191,7 +191,7 @@ func _B2B2BService_NewEntity_Handler(srv interface{}, ctx context.Context, dec f
 }
 
 func _B2B2BService_ListEntity_Handler(srv interface{}, stream grpc.ServerStream) error {
-	m := new(Zero)
+	m := new(Tkn)
 	if err := stream.RecvMsg(m); err != nil {
 		return err
 	}
@@ -248,7 +248,7 @@ func _B2B2BService_NewObligation_Handler(srv interface{}, ctx context.Context, d
 }
 
 func _B2B2BService_ListObligation_Handler(srv interface{}, stream grpc.ServerStream) error {
-	m := new(Zero)
+	m := new(Tkn)
 	if err := stream.RecvMsg(m); err != nil {
 		return err
 	}
