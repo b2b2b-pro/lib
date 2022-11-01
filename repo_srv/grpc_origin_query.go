@@ -15,7 +15,7 @@ func (gs *Controller) NewOrigin(ctx context.Context, og *torepo.Origin) (*torepo
 	var reply *torepo.NewOriginReply
 	om := object.MOrigin(og)
 
-	r, err := gs.db.CreateOrigin(*om)
+	r, err := gs.db.CreateOrigin(og.Tkn, *om)
 	if err != nil {
 		reply = &torepo.NewOriginReply{Id: int32(r), Err: err.Error()}
 	} else {

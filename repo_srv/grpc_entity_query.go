@@ -15,7 +15,7 @@ func (gs *Controller) NewEntity(ctx context.Context, frm *torepo.Entity) (*torep
 	var reply *torepo.NewEntityReply
 	ent := object.MEntity(frm)
 
-	r, err := gs.db.CreateEntity(*ent)
+	r, err := gs.db.CreateEntity(frm.Tkn, *ent)
 	if err != nil {
 		reply = &torepo.NewEntityReply{Id: int32(r), Err: err.Error()}
 	} else {
@@ -27,18 +27,18 @@ func (gs *Controller) NewEntity(ctx context.Context, frm *torepo.Entity) (*torep
 	return reply, nil
 }
 
-func (gs *Controller) ListEntity(z *torepo.Zero, stream torepo.B2B2BService_ListEntityServer) error {
+func (gs *Controller) ListEntity(tkn *torepo.Tkn, stream torepo.B2B2BService_ListEntityServer) error {
 	zap.S().Debugf("(s *GRPCServer)ListEntity\n")
 
 	var err error
 
-	le, err := gs.db.ListEntity()
+	le, err := gs.db.ListEntity(tkn.Tkn)
 	if err != nil {
 		zap.S().Errorf("gs.db.ListEntity() error: %v\n", err)
 	}
 
 	for _, x := range le {
-		if err = stream.Send(object.GEntity(&x)); err != nil {
+		if err = stream.Send(object.GEntity(tkn.Tkn, &x)); err != nil {
 			return err
 		}
 	}

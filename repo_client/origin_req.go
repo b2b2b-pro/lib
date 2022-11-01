@@ -8,11 +8,11 @@ import (
 	"go.uber.org/zap"
 )
 
-func (gc *RepoGRPC) CreateOrigin(om object.Origin) (int, error) {
+func (gc *RepoGRPC) CreateOrigin(tkn string, om object.Origin) (int, error) {
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancel()
 
-	r, err := gc.client.NewOrigin(ctx, object.GOrigin(&om))
+	r, err := gc.client.NewOrigin(ctx, object.GOrigin(tkn, &om))
 	if err != nil {
 		zap.S().Debugf("GRPC Client NewOrigin error: %v", err)
 

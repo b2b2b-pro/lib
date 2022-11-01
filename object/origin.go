@@ -29,8 +29,9 @@ func ParseOrigin(data io.Reader) (*Origin, error) {
 GOrigin конвертирует объект организация (Origin) В формат для передачи по gRPC
 From Model to gRPC
 */
-func GOrigin(x *Origin) *torepo.Origin {
+func GOrigin(tkn string, x *Origin) *torepo.Origin {
 	return &torepo.Origin{
+		Tkn:         tkn,
 		Id:          int32(x.ID),
 		Description: x.Description,
 	}

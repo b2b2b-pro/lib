@@ -30,8 +30,9 @@ func ParseEntity(data io.Reader) (*Entity, error) {
 GEntity конвертирует объект организация (Entity) В формат для передачи по gRPC
 From Model to gRPC
 */
-func GEntity(x *Entity) *torepo.Entity {
+func GEntity(tkn string, x *Entity) *torepo.Entity {
 	return &torepo.Entity{
+		Tkn:       tkn,
 		Id:        int32(x.ID),
 		Inn:       x.INN,
 		Kpp:       x.KPP,
