@@ -44,7 +44,7 @@ message Obligation {
   int32 id = 2;
   int32 dbtorid = 3;
   int32 creditorid = 4;
-  float cost = 5;
+  int64 cost = 5;
   int32 originid = 6;
   google.protobuf.Timestamp date = 7;
 }

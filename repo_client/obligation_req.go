@@ -35,6 +35,7 @@ func (gc *RepoGRPC) ListObligation(tkn string) ([]object.Obligation, error) {
 
 		if err != nil {
 			zap.S().Debugf("Loop ListObligation error: %v\n", err)
+			break
 		}
 
 		r = append(r, *object.MObligation(x))

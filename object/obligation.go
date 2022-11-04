@@ -15,7 +15,7 @@ type Obligation struct {
 	ID         int         `json:"id"`
 	DebtorID   int         `json:"debtor_id"`    // должник
 	CreditorID int         `json:"creditor_id"`  // кому должны
-	Cost       float32     `json:"cost"`         // сумма
+	Cost       int64       `json:"cost"`         // сумма
 	OriginID   int         `json:"origin_id"`    // происхождение долгового обязательства
 	Date       PaymentDate `json:"payment_date"` // дата наступления денежного обязательства
 }
@@ -55,6 +55,9 @@ MObligation конвертирует объект организация (Obliga
 From gRPC to Model
 */
 func MObligation(x *torepo.Obligation) *Obligation {
+	if x.Date == nil {
+		x.Date = timestamppb.Now()
+	}
 	return &Obligation{
 		ID:         int(x.Id),
 		DebtorID:   int(x.Dbtorid),

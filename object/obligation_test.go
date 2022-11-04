@@ -13,7 +13,7 @@ func TestMain(m *testing.M) {
 }
 
 func TestParseObligation(t *testing.T) {
-	str := "{\"id\":1,\"debtor_id\":11,\"creditor_id\":21,\"cost\":2.1,\"origin_id\":1,\"payment_date\":\"2021-10-30\"}"
+	str := "{\"id\":1,\"debtor_id\":11,\"creditor_id\":21,\"cost\":2,\"origin_id\":1,\"payment_date\":\"2021-10-30\"}"
 	x1 := strings.NewReader(str)
 	r1, err := ParseObligation(x1)
 	if err != nil {
