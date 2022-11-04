@@ -11,7 +11,18 @@ import (
 )
 
 func (gc *RepoGRPC) CreateObligation(tkn string, obl object.Obligation) (int, error) {
-	return 1, nil
+	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+	defer cancel()
+
+	r, err := gc.client.NewObligation(ctx, object.GObligation(tkn, &obl))
+	if err != nil {
+		zap.S().Debugf("GRPC Client NewObligation error: %v", err)
+		return 0, err
+	}
+
+	zap.S().Debugf("GRPC New Obligation Reply Id: %v\n", r.GetId())
+
+	return int(r.GetId()), err
 }
 
 func (gc *RepoGRPC) ListObligation(tkn string) ([]object.Obligation, error) {
